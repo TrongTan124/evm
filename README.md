@@ -1,36 +1,55 @@
-EVM - Simple Elasticsearch Version Manager
-==========================================
+EVM - Elasticsearch Version Manager
+===================================
 
-**EVM** is a simple bash script used for development to manage different versions of Elasticsearch on your local machine.
+`EVM` is a **simple** bash script used for managing multiple Elasticsearch versions on your local machine.
 
 ## Installation
+Just download the `evm` script then make it executable
+
 ```sh
-wget https://raw.githubusercontent.com/duydo/evm/master/evm -O '/usr/local/bin/evm'
+sudo curl -o /usr/local/bin/evm https://raw.githubusercontent.com/duydo/evm/master/evm
+sudo chmod +x /usr/local/bin/evm
 ```
 
 ## Usage
 ```sh
-evm list                                           List all versions of Elasticsearch have been installed
-evm install <version>                              Install a specific Elasticsearch version
-evm remove <version>                               Remove a specific Elasticsearch version
-evm use <version>                                  Use a specific Elasticsearch version
-evm which                                          Display the current Elasticsearch version
-evm plugin [<--install|--remove> <plugin>]         Install/remove Elasticsearch plugin
-evm start [--config-path </path/to/config/dir>]    Start Elasticsearch node with/without a specific config directory
-evm help                                           Display usage information
+ evm -h                                     Print help information
+ evm -V                                     Print version information
+ evm list                                   List all installed Elasticsearch versions
+ evm version                                Print the current activated Elasticsearch version
+ evm install <version>                      Install a specific Elasticsearch version
+ evm use <version>                          Use a specific Elasticsearch version
+ evm remove <version>                       Remove a specific Elasticsearch version if available
+ evm which [<version>]                      Print path to installed Elasticsearch version
+ evm plugin list                            List all installed Elasticsearch plugins
+ evm plugin <install|remove> <plugin>       Install or remove an Elasticsearch plugin
+ evm start [-c </path/to/config/dir>]       Start Elasticsearch in the background with a specific config directory (optional)
+ evm stop                                   Stop Elasticsearch if running
+ evm status                                 Check if Elasticsearch is running
 ```
 ## Example
 ```sh
-evm install 5.3.1                                  Install Elasticsearch 5.3.1
-evm use 5.3.1                                      Use Elasticsearch 5.3.1
-evm start                                          Start Elasticsearch node with the defaut config directory
-evm start --config-path /etc/elasticsearch         Start Elasticsearch node with /etc/elasticsearch config directory
-evm plugin --install x-pack                        Install the x-pack plugin
-evm plugin --remove x-pack                         Remove the x-pack plugin
+ evm install 5.3.1                          Install Elasticsearch 5.3.1
+ evm use 5.3.1                              Use Elasticsearch 5.3.1
+ evm start                                  Start Elasticsearch node with the default config directory
+ evm start -c /etc/elasticsearch            Start Elasticsearch node with /etc/elasticsearch config directory
+ evm status                                 Print Elasticsearch running status
+ evm stop                                   Stop Elasticsearch if it is running
+ evm plugin install x-pack                  Install the x-pack plugin
+ evm plugin remove x-pack                   Remove the x-pack plugin
 ```
 ## Note
-To remove, delete or uninstall evm - just remove the $EVM_HOME folder (usually ~/.evm)
+To uninstall, just remove the $EVM_HOME folder (usually ~/.evm)
 
+## TODOs:
+- Support `kibana` command with following sub commands:
+  - `kibana install`: Install Kibana for current Elasticsearch version
+  - `kibana remove`: Remove Kibana
+  - `kibana start`: Start Kibana
+  - `kibana stop`: Stop current running Kibana
+- Provide option `-k` for `evm start` command to allow Kibana starting with Elasticsearch
+- Provide `evm update` command to allow `evm` can update itself to latest version
+- Allow `evm install` installing unstable versions: `alpha, beta, rc`
 ## Licence
     This software is licensed under the Apache License, version 2 ("ALv2"), quoted below.
 
